@@ -1,0 +1,16 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css2?family=Archivo&display=swap');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+* {
+  font-family: $font-family-archivo;
+}
+
+body {
+  background-color: #ECECED;
+}
