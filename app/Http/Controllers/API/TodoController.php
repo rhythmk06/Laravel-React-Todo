@@ -36,9 +36,12 @@ class TodoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {   
+        $loggedUserId = JWTAuth::user()->id;
+        
         $todo = new Todo();
         $todo->name = $request->get('name');
+        $todo->user_id = $loggedUserId;
         $todo->save();
 
         $user = JWTAuth::user()->id;

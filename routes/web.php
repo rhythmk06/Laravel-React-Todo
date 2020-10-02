@@ -18,4 +18,8 @@ use Illuminate\Support\Facades\Route;
 // });
 
 
-Route::view('/{path?}', 'welcome');
+// Route::view('/{path?}', 'welcome');
+
+Route::get('/{path?}', function($path = null){         
+    return view('welcome');     
+})->where('path', '.*');

@@ -70,6 +70,9 @@ class Dashboard extends Component {
 		event.preventDefault();
 		let {name} = this.state;
 
+		let token = localStorage.getItem('token')
+		const headers = { Authorization: `Bearer ${token}` }
+
 		if(name === "" || name === "undefined" ) {
 			this.setState({
 				error: {status: 'true', msg: "Field should not be empty!"}
@@ -77,9 +80,9 @@ class Dashboard extends Component {
 			return false;
 		}else {
 			let newTodo = {name: name};
-			
+
 			const uri = 'api/todos';
-    		axios.post(uri, newTodo).then((response) => {
+    		axios.post(uri, newTodo, {headers}).then((response) => {
 				this.notifyInsert();
 				this.setState({
 					todos: response.data,
@@ -94,9 +97,13 @@ class Dashboard extends Component {
 	}
 	
 	handleDeleteAction = (event, todo) => {
+
+		let token = localStorage.getItem('token')
+		const headers = { Authorization: `Bearer ${token}` }
+
 		this.notifyDelete();
 		const uri = `api/todos/${todo.id}`;
-		axios.delete(uri).then((response) => {
+		axios.delete(uri, {headers}).then((response) => {
 			this.setState({
 				todos: response.data,
 				todoItemsCount: response.data.length
@@ -107,11 +114,15 @@ class Dashboard extends Component {
 	}
 
 	handleUpdateAction = (event, todo) => {
+
+		let token = localStorage.getItem('token')
+		const headers = { Authorization: `Bearer ${token}` }
+
 		let {updatedName} = this.state;
 		let editedTodoName = {name: updatedName};
 		
 		const uri = `api/todos/${todo.id}`;
-    	axios.patch(uri, editedTodoName).then((response) => {
+    	axios.patch(uri, editedTodoName, {headers}).then((response) => {
 			this.notifyUpdate();
 			this.setState({
 				todos: response.data,
@@ -155,14 +166,14 @@ class Dashboard extends Component {
 			<div className="container">
 				<h1 className="my-3 text-center">{title}</h1>
 				<div className="offset-md-3 col-md-6 text-center my-5	">
-					{/* <Form 
+					<Form 
 						name={name}
 						todos = {todos}  
 						todoItemsCount = {todoItemsCount}
 						eventGetInputValue = {(event) => this.getInputValue(event)} 
 						eventInsert = {(event) => this.handleInsertAction(event)} 
 						error = {error}
-					/> */}
+					/>
 				</div>
 				<div className="col-md-12 my-5">
                     <TodoList 

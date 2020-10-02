@@ -25,7 +25,7 @@ class Master extends Component {
     
     render() {
     return(
-        <BrowserRouter>
+        <BrowserRouter basename="laravel-react/public">
             <div>
                 <Header history={this.props.history} verify = {this.state.authenticated} eventChangeAuthentication = {(value) => this.changeAuthentication(value)} />
                 <Switch>
